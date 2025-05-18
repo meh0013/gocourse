@@ -1,0 +1,35 @@
+package main
+
+import "fmt"
+
+func main() {
+
+	// for i := 1; i <= 5; i++ {
+	// 	fmt.Println(i)
+	// }
+
+	//iterate over a collection
+	// numbers := []int{1, 2, 3, 4, 5, 6}
+	// for index, value := range numbers {
+	// 	fmt.Printf("Index: %v, Value: %v\n", index, value)
+	// }
+
+	// rows := 5
+	// //Outer loop
+	// for i := 1; i <= rows; i++ {
+	// 	for j := 1; j <= rows-i; j++ {
+	// 		fmt.Print(" ")
+	// 	}
+	// 	//inner loop
+	// 	for k := 1; k <= 2*i-1; k++ {
+	// 		fmt.Print("*")
+	// 	}
+	// 	fmt.Println() //move to the next line
+	// }
+
+	//new updates in Go
+	for i := range 10 {
+		fmt.Println(10 - i)
+	}
+	fmt.Println("We have lift off!")
+}

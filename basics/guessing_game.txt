@@ -1,0 +1,39 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
+
+func main() {
+	source := rand.NewSource(time.Now().UnixNano())
+	random := rand.New(source)
+
+	//generate a random number between 1 and 100
+	target := random.Intn(100) + 1
+
+	//Welcome
+	fmt.Println("Welcome to the Guessing Game!")
+	fmt.Println("I have chosen a number between 1 and 100")
+	fmt.Println("Can you guess what it is?")
+
+	var guess int
+	for {
+		fmt.Println("Enter your guess: ")
+		fmt.Scanln(&guess)
+		//Passing the address of guess so that no copies are made,
+		// we can comfortably use the guess variable for each iteration
+
+		//Check if guess is correct
+		if guess == target {
+			fmt.Println("Congratulations!")
+			break
+		} else if guess < target {
+			fmt.Println("Too low!")
+		} else {
+			fmt.Println("Too high!")
+		}
+
+	}
+}
