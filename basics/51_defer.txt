@@ -1,0 +1,29 @@
+package basics
+
+import "fmt"
+
+func main() {
+	//Defer st. invokes a func whose execution is deferred to the moment the surrounding func returns, either bc the surr func exec a return func, reached the end of its func body or bc the corresponding go routine is panicking
+
+	process(10)
+}
+
+func process(i int) {
+	defer fmt.Println("Deffered i value: ", i)
+	defer fmt.Println("First deferred statement executed")
+	defer fmt.Println("Second deferred statement executed")
+	defer fmt.Println("Third deferred statement executed")
+	i++
+	fmt.Println("Normal executed statement")
+	fmt.Println("Value of i: ", i)
+}
+
+//Practical Use Cases
+// -> Resource Cleanup
+// -> Unlocking Mutexes
+// -> Logging and Tracing
+
+//Best Practices
+// -> Keep Deferred Actions Short
+// -> Understand Evaluation Timing
+// -> Avoid Complex Control Flow

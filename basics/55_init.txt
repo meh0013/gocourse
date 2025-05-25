@@ -1,0 +1,33 @@
+package basics
+
+import "fmt"
+
+func init() {
+
+	fmt.Println("Initialising package1...")
+}
+
+func init() {
+
+	fmt.Println("Initialising package2...")
+}
+
+func init() {
+
+	fmt.Println("Initialising package3...")
+}
+
+func main() {
+
+	fmt.Println("Iniside the main function")
+}
+
+//Practical Use Cases
+// -> Setup Tasks
+// -> Configuration
+// -> Registering Components
+// -> Database initialisation 
+//Best Practices
+// -> Avoid side effects
+// -> Initialisation order
+// -> Documentation

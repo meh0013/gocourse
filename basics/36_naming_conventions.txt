@@ -1,0 +1,33 @@
+package basics
+
+type Employee struct{
+    FirstName string
+    LastName string
+    Age int
+}
+
+
+
+
+
+func main(){
+    //PascalCase
+    //Eg: CalculateArea, UserInfo, NewHTTPRequest
+    //Structs, interfaces, enums
+
+    //snake_case
+    //Eg: user_id, first_name, http_request
+    //variables, constants and file names
+
+    //UPPERCASE 
+    //Exclusively for constants in Go : ensures constants stand out and
+    //highlight their immutability.
+
+    //mixedCase
+    //Eg: javaScript, htmlDocument, isValid
+    //Variables, certain identifiers, esp using external libraries or sticking to naming conventions
+
+    const MAXRETRIES = 5
+    var employeeID = 1001
+    fmt.Println("EmployeeID : ", employeeID)
+}

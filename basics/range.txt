@@ -1,0 +1,20 @@
+package basics
+
+import "fmt"
+
+func main() {
+
+	message := "Hello World"
+
+	for i, v := range message {
+		fmt.Println(i, v)
+		fmt.Printf("Index: %d, Rune: %c\n", i, v)
+	}
+
+	//Range works on a copy of the data structure it iterates over, so modifying index or value inside the loop, it does not affect the original value
+	//Arrays, slices, and strings -> Range iterates as normal 
+	//Maps -> iterates over key value pairs but in an unspecified order 
+	//Channels -> until the channel is closed 
+
+	//If we do not intend to use the values received, we can assign them to the blank identifier aka _, can prevent memory leaks by allowing the garbage collector to reclaim the memory
+}

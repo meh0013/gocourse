@@ -1,0 +1,36 @@
+package basics
+
+import "fmt"
+
+
+// middleName := "Cane"
+
+//:= method can only be used inside functions to declare and initialize variables locally
+//to declare variables globally, you have to use the var keyword.
+//Also variables are mutable. So I were to declare middleName="Mayor" inside this function 
+// rn, it would override the previous value of middleName(i.e. "Cane")
+
+var middleName="Cane"
+
+func main(){
+	var age int
+	var name string="John"
+	var name1 = "Jane"
+	count := 10
+	lastName := "Smith"
+
+	//Default values
+	//Numeric Types : 0
+	//Boolean Types : False
+	//String Types: ""
+	//Pointers, slices, maps, fucntions and structs: nil
+
+	// ---- SCOPE
+	fmt.Println(middleName
+	)
+}
+
+func printname(){
+	firstName:="Michael"
+	fmt.Println(firstName)
+}

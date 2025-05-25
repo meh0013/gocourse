@@ -1,0 +1,25 @@
+package basics
+
+const pi = 3.14
+const GRAVITY-9.81
+//untyped constants - Go can understand and reason it out itself
+
+
+func main(){
+    const days int = 7
+
+    //types constants - for ease/clarity
+
+    const{
+        monday = 1
+        tuesday = 2
+        wednesday = 3
+        thursday int = 4  
+    }
+    //const block - groups up constants together, make code readable
+
+    name := "John"
+    //Gopher notation only for variables, not CONSTANTS
+
+
+}

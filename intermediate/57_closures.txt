@@ -1,0 +1,69 @@
+package intermediate
+
+import "fmt"
+
+func main() {
+
+	// sequence := adder() ; sequence is var of type func
+	// fmt.Println(sequence()) ; which is why sequence is called '()' here
+	// fmt.Println(sequence())
+	// fmt.Println(sequence())
+	// fmt.Println(sequence())
+
+	// sequence2 := adder()
+	// fmt.Println(sequence2())
+
+	//Subtracter is an anonymous function, that takes no inputs, and returns an anonymous function that takes an int as an input and returns an int as output
+	subtracter := func() func(int) int {
+		countdown := 99 //countdown is initiliased only once
+		return func(x int) int {
+			countdown -= x
+			return countdown
+		}
+	}() //immediately executed
+
+	//Using the closure subtracter
+	fmt.Println(subtracter(1))
+	fmt.Println(subtracter(2))
+	fmt.Println(subtracter(3))
+	fmt.Println(subtracter(4))
+	fmt.Println(subtracter(5))
+}
+
+// A func "adder" that takes no input but returns a func, which in turn returns an int
+func adder() func() int {
+	i := 0
+	fmt.Println("previous value of i: ", i)
+	return func() int { //anonymous function
+		i++
+		fmt.Println("added 1 to i")
+		return i
+	}
+}
+
+//Closures and Scope
+//intSeq is a function that is returning another function.
+//nextInt becomes the returned function without the initial value of i
+// value of i is stored in RAM/memory and now that value will keep getting updated as the returning function is programmed to access it and increase it.
+
+//Closures
+//Practical Use Case
+// -> Stateful func
+// -> Encapsulation
+// -> Callbacks; maintain state in asynchronous operations
+
+//Usefulness of closures
+// -> Encapsulation
+// -> Flexibility
+// -> Readability
+
+//Considerations
+// -> Memory usage; can keep variables alive longer than expected
+// -> Concurrency
+
+//Best Practices
+// -> Limit Scope
+// -> Avoid Overuse
+
+//Closures work on lexical scoping, meaning they capture variables from their surrounding context where they're defined. This allows closures to access variables even after the outer function has terminated.
+//

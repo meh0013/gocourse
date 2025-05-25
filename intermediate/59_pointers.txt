@@ -1,0 +1,48 @@
+package intermediate
+
+import "fmt"
+
+func main() {
+
+	var ptr *int
+	var a int = 10
+	ptr = &a //referencing
+
+	fmt.Println(a)
+	fmt.Println(ptr)
+	fmt.Println(*ptr) //dereferencing a pointer
+
+	modifyValue(ptr)
+	fmt.Println(a)
+}
+
+func modifyValue(ptr *int) {
+	*ptr++
+}
+
+//A pointer is a variable that stores the memory address of another variable.
+//Use Cases:
+// -> Modify the value of a variable directly
+// -> Pass large data structures efficiently between functions
+// -> Manage memory directly for performance reasons
+
+//Pointer Declaration and Initialisation
+// Declaration - > var ptr *int : pts is a pointer to an integer (*int)
+// Initialisation ->
+// 		var a int=10
+// 		ptsr =&a //pts now points to a's memory address
+//Pointer Operations: Limited to referencing(&) and dereferencing(*)
+//Nil Pointers
+//Go does not support pointer arithmetic like C or C++
+//Passing pointers to functions
+//pointers to structs
+//Use pointers when a function needs to mofidy an argument's value
+// 'unsafe.Pointer(&x)' converts the address of 'x' to an 'unsafe.Pointer'
+
+// ______________________________IMP____________________________________
+
+//Go run makes a temp executable each time we execute go run
+//*ptr -> pointer variable
+//**ptr -> dereferences and gives the actual value stored at that address stored in the pointer
+//Zero value of a pointer is nil; A nil pointer is often used to indicate that a pointer is not currently valid or currently not initialised.
+//tautological condition!

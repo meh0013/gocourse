@@ -1,4 +1,4 @@
-package main
+package basics
 
 import "fmt"
 
@@ -10,6 +10,8 @@ func main() {
 	// 	i++
 	// }
 
+
+	//for as while with break
 	sum := 0
 	for {
 		sum += 10
