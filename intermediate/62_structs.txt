@@ -1,0 +1,106 @@
+package intermediate
+
+func main(){
+	type Person struct{
+		firstName string
+		lastName string
+		age int
+	}
+
+	type PhoneHomeCell struct{
+		home string
+		cell string
+	}
+
+	p:=Person{
+		firstName : "John",
+		lastName : "Doe",
+		age : 30,
+	}
+
+	p1 := Person{
+		firstName : "Jane",
+		age:25,
+	}
+
+	fmt.Println(p.firstName)
+	fmt.Print(p1.fristName)
+
+	//Anonymous Structs 
+	user := struct{
+		username string
+		email string
+	} {
+		username : "user123",
+		email : "pseudoemail@example.org"
+	}
+
+	p2 := Person{
+		firstName: "Jane",
+		age: 25,
+	}
+
+	p3 := Person{
+		firstName : "Jane",
+		age: 25,
+	}
+
+	p2.address.city = "New York"
+	p2.address.country = "USA"
+
+	fmt.Println(p1.firstName)
+	fmt.Println(p2.firstName)
+	fmt.Println(p1.fullName())
+	fmt.Println(p1.address)
+	fmt.Println(p2.address.country)
+	fmt.Println(p1.cell)
+	fmt.Println(p1.address.city)
+	fmt.Println("Are p1 and p2 equal: ",p1==p2)
+
+
+}
+
+type Person struct{
+	firstName string
+	lastName string
+	age int
+	address Address{
+		city:"London",
+		country: "U.K.",
+	},
+	PhoneHomeCell : PhoneHomeCell{
+		home: "465456454",
+		cell: "45646546546",
+
+	},
+}
+
+
+
+func (p Person) fullName() string {
+	return p.firstName + "." + p.lastName 
+}
+
+func (p *Person) incrementAgeBy1(){
+	p.age++
+}
+
+//Structs
+//Structs are defined using the 'type' and 'struct' keywords followed by curly braces '{}'
+//containing a list of fields. 
+
+//Fields are defined with a name and a type.
+//Anonymous Structs
+//Anonymous Fields 
+
+//Methods
+// -> func (value/pointer receiver) methodName(arguments, if any) <return type, if any> {
+// //Method implementation
+//}
+
+//Method Declaration
+//Value receiver method
+// -> func (!Type) methodName(){}
+//Pointer receiver method 
+// -> func(t*Type) methodName(){}
+// Comparing Structs

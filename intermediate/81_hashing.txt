@@ -1,0 +1,94 @@
+// Hashing is a process used in computing to transform data into a fixed size string of characters, which typically appears random, and this transformation is done using a special algorithm called a hash function.
+
+//Hashing results in fixed size output, no matter how large or small the input data is
+
+package main
+
+import (
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
+	"fmt"
+	"io"
+)
+
+func main() {
+
+	password := "password123"
+
+	// hash := sha256.Sum256([]byte(password))
+	// hash512 := sha512.Sum512([]byte(password))
+
+	// fmt.Println(password)
+	// fmt.Println(hash)
+	// fmt.Println(hash512)
+	// fmt.Printf("SHA-256 Hash hex val: %x\n", hash)
+	// fmt.Printf("SHA-512 Hash hex val: %x\n", hash512)
+
+	salt, err := generateSalt()
+	fmt.Println("Original Salt: ", salt)
+	fmt.Printf("Original Salt: %x\n", salt)
+	if err != nil {
+		fmt.Println("Error generating salt: ", err)
+		return
+	}
+
+	//Hash the password with salt
+	signUpHash := hashPassword(password, salt)
+
+	//Store the salt and password in database, just printing it out for now
+	saltStr := base64.StdEncoding.EncodeToString(salt)
+	fmt.Println("Salt: ", saltStr)    //simulate as storing in database
+	fmt.Println("Hash: ", signUpHash) //simulate as storing in database
+
+	//verify
+	//retrieve the saltStr and decode it
+	decodedSalt, err := base64.StdEncoding.DecodeString(saltStr)
+	if err != nil {
+		fmt.Println("Unable to decode salt: ", err)
+		return
+	}
+	loginHash := hashPassword("password124", decodedSalt)
+
+	//Compare the stores signUpHash with loginHash
+	if signUpHash == loginHash {
+		fmt.Println("Password is correct. You are logged in.")
+	} else {
+		fmt.Println("Login failed. Please check user credentials.")
+	}
+}
+
+func generateSalt() ([]byte, error) {
+	salt := make([]byte, 16)
+	_, err := io.ReadFull(rand.Reader, salt)
+	//rand.Reader -> Cryptographically secure random numbers
+	if err != nil {
+		return nil, err
+	}
+	return salt, nil
+
+}
+
+// Function to hash password
+// If we want to export this func for other packages to be able to use it, we would name it HashPassword so it's available outside this package as well -> used in big APIs.
+func hashPassword(password string, salt []byte) string {
+	saltedPassword := append(salt, []byte(password)...)
+	//Since it is a slice, we have to destructure the byte slice(...) bc the 2nd argument is a variadic parameter -> destr for the elements to be separated and then add it into the salt slice.
+	hash := sha256.Sum256(saltedPassword)
+	return base64.StdEncoding.EncodeToString(hash[:])
+}
+
+// Key Components
+//  -> Deterministic: Same input will always produce the same hash output; always unique output, so a small change in the input will produce a completely different hash -> avalanche effect
+//  -> (Hash functions are designed to be one-way functions. So you cannot easily reverse a hash to get the original input data. Fundamental property of cryptographic hash functions.
+//  -> Fast Computation
+//  -> (Our APIs are designed to not directly match the input from the password field)
+//  -> Pre-image resistance
+//  -> Collision resistance
+//  -> SHA-256
+//  -> SHA-512
+//  -> Salting
+
+// Best Practices
+//  -> Use of standard libraries
+//  -> Algorithm updates

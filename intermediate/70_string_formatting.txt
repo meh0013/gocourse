@@ -1,0 +1,29 @@
+package intermediate
+
+import "fmt"
+
+func main() {
+
+	num := 424
+	fmt.Printf("%05d\n", num)
+
+	message := "Hello"
+	fmt.Printf("|%10s|\n", message)
+	fmt.Printf("|%-10s|\n", message)
+
+	message1 := "Hello \nWorld!"
+	message2 := `Hello \nWorld!`
+
+	fmt.Println(message1)
+	fmt.Println(message2)
+
+	sqlQuery := `SELECT * FROM users WHERE age > 30`
+	fmt.Println(sqlQuery)
+
+}
+
+//String formatting -> techniques used to create formatted output from var/consts
+//String interpolation or format specifiers
+//Go supports string interpolation using backticks
+//Backtick makes a string a raw string literal, which means that it is going to consider everything
+//as a string literal

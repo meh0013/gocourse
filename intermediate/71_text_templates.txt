@@ -1,0 +1,56 @@
+package intermediate
+
+import (
+	"html/template"
+	"os"
+)
+
+func main() {
+
+	// tmpl:= template.New("example")
+
+	//Template used to generate dynamic output
+	// tmpl, err := template.New("example").Parse("Welcome, {{.name}}! How are you doing?\n")
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	//The above but with template.Must()
+	tmpl := template.Must(template.New("Example").Parse("Welcome, {{.name}}! How are you doing?\n"))
+
+	//Define data for the welcome message template
+	data := map[string]interface{}{
+		"name": "John",
+	}
+
+	err := tmpl.Execute(os.Stdout, data)
+	if err != nil {
+		panic(err)
+	}
+}
+
+// Actions:
+// 1) Variable insertion: {{.FieldName}}
+// 2) Pipelines: {{functionName .FieldName}}
+// 3) Control Structures: {{if .Condition}} ... {{else}} ... {{end}}
+// 4) Iteration: {{range .Slice}} ... {{end}}
+
+// Advanced Features
+// 1) Nested Templates
+// 2) Functions
+// 3) Custom delimiters
+// 4) Error Handling: template.Must()
+
+// Use Cases
+// 1) HTML Generation
+// 2) Email Templates
+// 3) Code Generations
+// 4) Document Generation
+
+// Best Practices
+// 1) Separation of concerns
+// 2) Efficiency
+// 3) Security
+
+// When we use template.Must(), we will not have to handle the error ourselves and template.Must() will automatically panic if we have an error while parsing our template
+//template.Must() handle the error from parse

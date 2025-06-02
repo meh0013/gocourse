@@ -1,0 +1,63 @@
+package intermediate
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+
+	fmt.Println("He said, \"I am great\"")
+	fmt.Println(`He said, "I am great"`)
+
+	//Compile a regex pattern to match email addresses
+	re := regexp.MustCompile(`[a-zA-Z0-9._%-]+@[a-zA-Z0-9,-]+\.[a-zA-Z]{2,}`)
+	//first section: [a-zA-Z0-9._%-] if the hyphen is not being used as a range indicator, it must be put at the last, otherwise the regexp module will try to treat it as a range and without any valid values on either side, it will return an error. So if you want to include the hyphen as an explicit character to be included, it has to be put at the last
+
+	//test strings
+	email1 := "user@email.com"
+	email2 := "invalid_email"
+
+	//Match
+	fmt.Println("Email1: ", re.MatchString(email1))
+	fmt.Println("Email2: ", re.MatchString(email2))
+
+	//Capturing Groups
+	//Compile a regex pattern to capture date components
+	re = regexp.MustCompile(`(\d{4})-(\d{2})-(\d{2})`)
+
+	//Test string
+	date := "2024-07-30"
+
+	//Find all submatches
+	submatches := re.FindStringSubmatch(date)
+	fmt.Println(submatches)
+	fmt.Println(submatches[0])
+	fmt.Println(submatches[1])
+	fmt.Println(submatches[2])
+	fmt.Println(submatches[3])
+
+	//Source string
+	str := []string{"Fuck", "Balls"}
+	re = regexp.MustCompile(`[aeiou]`)
+
+	for _, insults := range str {
+		result := re.ReplaceAllString(insults, "*")
+		fmt.Println(result)
+	}
+
+	//i - case insensitive
+	//m - multiline model
+	//s - dot matches all
+
+	re = regexp.MustCompile(`(?i)go`)
+
+	//Test string
+	text := "Golang is going great"
+
+	//Match
+	fmt.Println("Match: ", re.MatchString(text))
+
+}
+
+//flags always begin with a ?

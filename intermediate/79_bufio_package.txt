@@ -1,0 +1,113 @@
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+//INTERVIEW QUESTION POSSIBLE - REVISIT THIS VIDEO
+
+package intermediate
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+
+	// reader := bufio.NewReader(strings.NewReader("Hello, bufio packageee!\nHow are you doing?"))
+
+	// // Reading byte slice
+	// data := make([]byte, 20)
+	// n, err := reader.Read(data)
+	// if err != nil {
+	// 	fmt.Println("Error reading:", err)
+	// 	return
+	// }
+	// fmt.Printf("Read %d bytes: %s\n", n, data[:n])
+
+	// line, err := reader.ReadString('\n')
+	// if err != nil {
+	// 	fmt.Println("Error reading string:", err)
+	// 	return
+	// }
+	// fmt.Println("Read string:", line)
+
+	writer := bufio.NewWriter(os.Stdout)
+
+	// Writing byte slice
+	data := []byte("Hello, bufio package!\n")
+	n, err := writer.Write(data)
+	if err != nil {
+		fmt.Println("Error writing:", err)
+		return
+	}
+	fmt.Printf("Wrote %d bytes\n", n)
+
+	// Flush the buffer to ensure all data is written to os.Stdout
+	err = writer.Flush()
+	if err != nil {
+		fmt.Println("Error flushing writer:", err)
+		return
+	}
+
+	// Writing string
+	str := "This is a string.\n"
+	n, err = writer.WriteString(str)
+	if err != nil {
+		fmt.Println("Error writing string:", err)
+		return
+	}
+	fmt.Printf("Wrote %d bytes.\n", n)
+
+	// Flush the buffer
+	err = writer.Flush()
+	if err != nil {
+		fmt.Println("Error flushing writer:", err)
+		return
+	}
+
+}
+
+// Key Components
+// bufio.Reader
+// -> func NewReader(rd io.Reader) *Reader
+// -> func (r *Reader) Read(p []byte)(n int, err error)
+// -> func (r *Reader) ReadString(delim byte)(line string, err error)
+
+// bufio.Writer
+// -> func NewWriter(wr io.Writer) *Writer
+// -> func (w *Writer) Write(p []byte ) (n int, err error)
+// -> func (w *Writer) WriteString(s string) (n int, err error)
+
+// Use Cases and Benefits
+// Buffering
+// Convenience Methods
+// Error Handling
+
+// Best Practices
+// Check Errors
+// wrap Reader and Writer instances for efficient buffered I/O operations
+// Don't forget to call flush
+
+// What buffering does is it reads and writes data in chunks and we can define these chunks according to us. Buffering is transferring data communicating between two ends in chunks.
+
+//Buff io.reader is a struct and it wraps around io.reader
+
+//Read method will read a finite amount of data from the source into a byte slice.
+
+// bufio.NewReader() accepts other readers as input and then it buffers that existing reader and returns a new reader whose buffer has the default size
+
+//The reader object is an interface that allows you to read data from the string, just like you would read from a file or network connection
+
+//The bufio.reader object provides additional functionality on top of basic reader like buffering the data and offering more methods to read data in various ways.

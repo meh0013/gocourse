@@ -1,0 +1,60 @@
+// Encoding is essentially the method used to translate data from its original format into a specific format that can be used by other systems, applications or protocols.
+
+//Base64 is a binary to text encoding scheme that converts binary data into a textual representation using a set of 64 ASCII characters. It is commonly used for transmitting binary data over text-based protocols such as email or storing binary data as text in databases or files.
+
+//Also used in URLs, esp URL safe variants and in data URLs for embedding small resources directly into HTML or CSS. Also for text transmission.
+
+package intermediate
+
+import (
+	"encoding/base64"
+	"fmt"
+)
+
+func main() {
+
+	data := []byte("He~lo, Base64 Encoding")
+
+	// Encode to Base64
+	encoded := base64.StdEncoding.EncodeToString(data)
+	fmt.Println(encoded)
+
+	// Decode from Base64
+	decoded, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		fmt.Println("Error in decoding:", err)
+		return
+	}
+	fmt.Println("Decoded:", string(decoded))
+
+	// URL safe, avoid '/' and '+'
+
+	urlSafeEncoded := base64.URLEncoding.EncodeToString(data)
+	fmt.Println("URL Safe encoded:", urlSafeEncoded)
+
+}
+
+//Why Base64?
+//  -> Text transmission
+//  -> Storage
+//  -> URLs and Data URLs
+
+// Why is encoding important?
+//  -> Data Storage
+//  -> Data Transmission
+//  -> Data Interoperability
+
+// Common Examples of Encoding
+//  -> Text Encoding: ASCII, UTF-8, UTF-16
+//  -> Data Encoding: Base64, URL Encoding
+//  -> File Encoding: Binary Encoding, Text Encoding
+
+// Use Cases
+//  -> Binary Data Transfer
+//  -> Data Storage
+//  -> Embedding resources
+
+// Security Considerations
+//  -> It is NOT encryption
+//  -> Proper handling of padding
+//  -> Use appropriate variants
