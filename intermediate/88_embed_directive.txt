@@ -1,0 +1,56 @@
+package intermediate
+
+import (
+	"embed"
+	"fmt"
+	"io/fs"
+	"log"
+)
+
+//We're only using the embed package for its side effects, we aren't yet using any of the methods. So the compiler throws an error since we aren't directly using it. To quieten down the compiler, we insert a "_" before it to let the compiler know we're only using it for the side effects.
+
+// below is a DIRECTIVE
+//
+//go:embed example.txt
+var content string
+
+//go:embed basics
+var basicsFolder embed.FS
+
+func main() {
+
+	fmt.Println("Embedded content:", content)
+	content, err := basicsFolder.ReadFile("basics/hello.txt")
+	if err != nil {
+		fmt.Println("Error reading file:", err)
+		return
+	}
+
+	fmt.Println("Embedded file content:", string(content))
+
+	err = fs.WalkDir(basicsFolder, "basics", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+		fmt.Println(path)
+		return nil
+
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+//The embed directive is a feature to embed static files or directories into go binaries at build time. This directive provides a convenient and efficient way to include assets directly within your go pgms, eliminating the need to manage these assets separately.
+
+//Why use? Simplicity, efficiency, security, default values and usage
+//Supported Types: Files, directories
+//Use Cases: web servers, config files, testing
+//Considerations: file size, update strategy, compatibility
+
+//Embedded files are bundled within the binary, reducing exposure to external manipulation or unauthorized access.
+
+//The embed directive in go is not a command, it is a directive.

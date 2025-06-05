@@ -1,0 +1,31 @@
+package intermediate
+
+import "github.com/sirupsen/logrus"
+
+func main() {
+
+	log := logrus.New() //New instance of the Logrus logger
+
+	//Set log level
+	log.SetLevel(logrus.InfoLevel)
+
+	//Set log format
+	log.SetFormatter(&logrus.JSONFormatter{})
+
+	//Logging examples
+	log.Info("This is an info message.")
+	log.Warn("This is a warning message.")
+	log.Error("This is an error message.")
+
+	log.WithFields(logrus.Fields{
+		"username": "John Doe",
+		"method":   "GET",
+	}).Info("User logged in.")
+}
+
+//go mod init gocourse
+//open new go.mod file and use the cmd "go get github.com/sirupsen/logrus" which installs the necessary dependencies as and where needed(in the go.mod file)
+
+//JSON Formatter goated for log aggregation and analysis tools like Elk, ElasticSearch, Logstash and Kibana. 
+//Elk stack can easily ingest JSON logs and allow for advanced querying and visualisation using JSON Formatter. 
+//Also helps with interoperability. Widely used format for data interchange, making it easy to integrate with other systems. 

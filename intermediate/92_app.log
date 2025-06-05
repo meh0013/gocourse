@@ -1,0 +1,6 @@
+INFO: 2025/06/04 01:00:13 92_logging.go:31: This is a debug message. 
+DEBUG: 2025/06/04 01:00:41 92_logging.go:31: This is a debug message. 
+DEBUG: 2025/06/04 01:02:23 92_logging.go:35: This is a debug message. 
+WARN: 2025/06/04 01:02:23 92_logging.go:36: This is a warning message.
+INFO: 2025/06/04 01:02:23 92_logging.go:37: This is an info message.
+ERROR: 2025/06/04 01:02:23 92_logging.go:38: This is an error message.

@@ -2,7 +2,7 @@
 
 //Hashing results in fixed size output, no matter how large or small the input data is
 
-package main
+package intermediate
 
 import (
 	"crypto/rand"

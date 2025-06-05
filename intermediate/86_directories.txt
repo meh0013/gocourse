@@ -1,0 +1,101 @@
+package intermediate
+
+import (
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+)
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+		//fmt.Println(err)
+	}
+}
+
+func main() {
+
+	//err:=os.Mkdir("subdir",0755)
+	//checkError(err)
+	//checkError(os.Mkdir("subdir1", 0755))
+	//for the int code https://chmod-calculator.com/
+
+	//defer os.RemoveAll("subdir1")
+
+	//os.WriteFile("subdir1/file", []byte(""), 0755)
+
+	//checkError(os.MkdirAll("subdir/parent/child", 0755))
+	// checkError(os.MkdirAll("subdir/parent/child1", 0755))
+	// checkError(os.MkdirAll("subdir/parent/child2", 0755))
+	// checkError(os.MkdirAll("subdir/parent/child3", 0755))
+	// os.WriteFile("subdir/parent/file", []byte(""), 0755)
+	// os.WriteFile("subdir/parent/child1/file", []byte(""), 0755)
+
+	result, err := os.ReadDir("subdir/parent")
+	checkError(err)
+
+	for _, entry := range result {
+		fmt.Println(entry.Name(), entry.IsDir(), entry.Type())
+	}
+
+	checkError(os.Chdir("subdir/parent/child"))
+	dir, err := os.Getwd()
+	checkError(err)
+	fmt.Println(dir)
+	result, err = os.ReadDir(".")
+	checkError(err)
+
+	fmt.Println("Reading subdir/parent/child")
+	for _, entry := range result {
+		fmt.Println(entry)
+	}
+
+	checkError(os.Chdir("../../.."))
+	dir, err = os.Getwd() //get working directory
+	checkError(err)
+	fmt.Println(dir)
+
+	// filepath.Walk and filepath.WalkDir
+	//Walk.Dir has better performance compared to just walk bc walkdir avoids some internal allocations by working directly with directory entries. Walk.Dir uses os.directory entry under the hood, which is more efficient while filepath.walk uses os.fileinfo which provides more details but is maybe less efficient.
+
+	pathfile := "subdir"
+	//You can also try putting pathfile:="." which will show a ton of files heh
+	fmt.Println("Walking Directory")
+	err = filepath.WalkDir(pathfile, func(path string, d fs.DirEntry, err error) error {
+		//os.DirEntry is used since DirEntry is a part of the os package
+		if err != nil {
+			fmt.Println("Error:", err)
+			return err
+		}
+
+		fmt.Println(path)
+		return nil
+	})
+
+	checkError(err)
+
+	checkError(os.RemoveAll("subdir"))
+	checkError(os.Remove("subdir1"))
+
+}
+
+//ls -al to see hidden files!!!
+
+// Key Concepts
+//  -> os.Mkdir
+//  -> os.MkdirAll
+//  -> os.ReadDir
+//  -> os.Chdir
+//  -> os.Remove
+//  -> os.RemoveAll
+
+// Best Practices
+//  -> Error Handling
+//  -> Permissions
+//  -> Cross-Platform compatibility
+
+// Practical Applications
+//  -> Organising files
+//  -> File system navigation
+//  -> Batch processing

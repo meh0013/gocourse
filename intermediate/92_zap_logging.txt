@@ -1,0 +1,26 @@
+package intermediate
+
+import (
+	"log"
+
+	"go.uber.org/zap"
+)
+
+func main() {
+
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Println("Error in initialising Zap logger.")
+	}
+	defer logger.Sync() //to flush any buffered log entries
+
+	logger.Info("This is an info message.")
+
+	logger.Info("User logged in", zap.String("username", "John Doe"), zap.String("method", "GET"))
+
+	//ts=timestamp -> can convert the Unix timestamp into a formatted one
+}
+
+//Will be dealt with later: logging w/ contexts; contextual logging. Adding context to logs can be very useful for tracking the flow of requests and debugging.
+//Best Practices: Log levels, structured logging, contextual information, log rotation(manage the size of log files by periodically rotating them out and starting new ones), external services
+//Consider using external log management services like Elk stack, Splunk, Grafana and Prometheus, Loki, etc. for centralised log aggregation and analysis
