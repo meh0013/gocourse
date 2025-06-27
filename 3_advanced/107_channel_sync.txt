@@ -1,0 +1,86 @@
+package advanced
+
+import (
+	"fmt"
+	"time"
+)
+
+// func main() {
+
+// 	done := make(chan struct{})
+
+// 	go func() {
+// 		fmt.Println("Working....")
+// 		time.Sleep(2 * time.Second)
+// 		done <- struct{}{}
+// 	}()
+
+// 	<-done
+// 	fmt.Println("Finished.")
+
+// }
+
+// func main() {
+// 	ch := make(chan int)
+
+// 	go func() {
+// 		ch <- 9 //Blocking until the value is received
+// 		time.Sleep(1 * time.Second)
+// 		fmt.Println("Sent value")
+// 	}()
+
+// 	value := <-ch //Blocking until a value is sent
+// 	fmt.Println(value)
+
+// }
+
+//	// =================== SYNCHRONIZING MULTIPLE GOROUTINES AND ENSURING THAT ALL GOROUTINES ARE COMPLETE
+// func main() {
+// 	numGoroutines := 3
+// 	done := make(chan int, 3)
+
+// 	for i := range numGoroutines {
+// 		go func(id int) {
+// 			fmt.Printf("Goroutine %d working...\n", id)
+// 			time.Sleep(time.Second)
+// 			done <- id //SENDING SIGNAL OF COMPLETION
+// 		}(i)
+// 	}
+
+// 	for range numGoroutines {
+// 		<-done //Wait for each goroutine to finish, WAIT FOR ALL GOROUTINES TO SIGNAL COMPLETION
+// 	}
+
+// 	fmt.Println("All goroutine are complete.")
+
+// }
+
+// =============== SYNCHRONISING DATA EXCHANGE
+func main() {
+
+	data := make(chan string)
+	go func() {
+		for i := range 5 {
+
+			data <- "hello " + string('0'+i)
+			time.Sleep(100 * time.Millisecond)
+		}
+		close(data) //closing channel after all the values are pushed into it, and before the thread terminates
+
+	}()
+	//close(data) -> code runs, channel found, channel sent to the bg, close encountered, channel closed as soon as it was opened, no new receivers formed as it's trying to loop over a closed channel
+	//Channel closed before Goroutine could send a value to the channel
+
+	for value := range data {
+		fmt.Println("Received value: ", value, ":", time.Now())
+	} //Loops over only on active channel, creates receiver each time and stops creating receiver (looping) once the channel is closed
+
+}
+
+//Goroutine founds, it runs in the background where values are sequentially inserted into a channel. In the main thread, as soon as a value is entered into a channel, a receiver is formed which instantly accepts it, clearing the channel again for another value. After 5 values, the channel is closed, so the main thread also stops creating receivers and terminates.
+
+// We send something to a channel, it will block until the value is received. If the channel is unbuffered or full, and when we are receiving from a channel, it will block until the value is sent if the channel is empty.
+
+//Running the code, we don't get "Sent value" in the output, this is bc, as soon as the value is received by the channel in the main function, the execution flow is so fast that the program does not leave a time margin for the go routine to execute printing the "Sent value" statement. To get this printed, the main thread/main func. needs to be busy doing smth while this statement in the goroutine executes. We could put the main thread to sleep for 1 sec before it ends, to simulate some work and see it printed.
+
+//When you have many goroutines, always have an equal number of receivers. This is channel synchronisation.

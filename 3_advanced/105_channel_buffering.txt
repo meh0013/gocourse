@@ -1,0 +1,51 @@
+package advanced
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+
+	ch := make(chan int)
+
+	go func() {
+		time.Sleep(3 * time.Second)
+		fmt.Println(<-ch)
+		fmt.Println("3 second Goroutine finished.")
+	}()
+	ch <- 1
+
+	// go func() {
+	// 	//ch <- 1
+	// 	time.Sleep(2 * time.Second)
+	// 	fmt.Println("2 second Goroutine finished.")
+	// }()
+
+	// go func() {
+	// 	ch <- 1
+	// 	time.Sleep(3 * time.Second)
+	// 	fmt.Println("3 second Goroutine finished.")
+	// }()
+	// receiver := <-ch
+	// fmt.Println(receiver)
+	time.Sleep(4 * time.Second)
+	fmt.Println("End of program")
+
+}
+
+//var:=make(chan type) : by default, this is an unbuffered channel
+//Buffered channel is a channel with storage
+//Most imp fact: Buff. Channels allow async comm. w/h means that buff. channels allow senders to continue working without blocking until the buffer is full
+//Buffer channels will only block when the buffer is full
+//Buffer chan. also for load balancing, handling bursts of data w/o immediate sync., -> better flow control.
+
+//We always send values into an unbuffered channel inside a goroutine, and then we receive those values inside the main goroutine, the main thread or any other function that we have. i.e. we cannot have ch<-1 in the main func and the receiver in the thread, because as soon as the channel gets a value, it looks for an immediate receiver, but that lies in another thread/goroutine, so it return an error.
+
+//Receiver will wait for all the goroutines to finish, and then it'll throw an error.
+
+//Unbuffered channels is that unbuffered channels block on send if there is no corresponding receive operation.
+
+//Unbuff. channels block on send if there is no corr. receive op ready, but if there's a goroutine, they wait for the goroutine to finish
+
+//The basic property of channel is to wait for a goroutine to finish, and as soon as it receives its value, then it will let the execution flow to move on to the next line. Until then, it will keep the execution flow at halt, execution flow paused and it won't let it move forward. 

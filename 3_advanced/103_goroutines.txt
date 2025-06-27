@@ -1,0 +1,83 @@
+package advanced
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	var err error
+
+	fmt.Println("Beginning program.")
+	go sayHello()
+	fmt.Println("After sayHello function")
+
+	//(right)go doWork()
+	//(right)err = doWork()
+	//(wrong)err=go doWork() //This is not accepted
+	//(right)
+	go func() {
+		err = doWork()
+	}() // anon func
+	go printNumbers()
+	go printLetters()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	} else {
+		fmt.Println("Work completed successfully.")
+	}
+	time.Sleep(2 * time.Second)
+	// if err != nil {
+	// 	fmt.Println("Error: ", err)
+	// } else {
+	// 	fmt.Println("Work completed successfully.")
+	// }
+
+}
+
+func sayHello() {
+	time.Sleep(1 * time.Second)
+	fmt.Println("Hello from Goroutine")
+}
+
+func printNumbers() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("Number: ", i, time.Now())
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+
+func printLetters() {
+	for _, letter := range "abcde" {
+		//fmt.Println(string(letter))
+		fmt.Println(string(letter), time.Now())
+		time.Sleep(200 * time.Millisecond)
+	}
+}
+
+func doWork() error {
+	//simulate work
+	time.Sleep(1 * time.Second)
+	return fmt.Errorf("an error occured in doWork")
+}
+
+//Purpose: Simplify concurrent programming, efficiently handle parallel tasks such as I/O operations, calculations, provide a way to perform tasks concurrently w/o manually managing threads
+//goroutine scheduling managed by the Go Runtime Scheduler, uses m:n scheduling model, efficient multiplexing
+//avoid goroutine leaks, limiting goroutine creation, error handling, synchronisation
+
+//Add the go keyword preceing the function and execute that function immediately in the main function
+
+//func main(){go sayHello()}
+//The main function runs in the main thread, and when the goroutine line is reached, it goes into another thread and finishes running, which as we know, takes at least one second, but by the time it comes back to the main thread, it is over since there was no other code after the goroutine. So somewhere in the memory, "Hello from Goroutine" is saved, but it's not accessed, and it'll be replaced by some other memory
+
+//Goroutines do not stop the program flow and are non-blocking. They're essentially like async await or promises in Node.js in JavaScript.
+
+//A goroutine starts when created and ru concurrently with other goroutines. There may be many goroutines that we can run and all run concurrently. A goroutine exits when the function it is running completed. Goroutines run independently and concurrently.
+
+//"m" goroutines run on/are mapped onto "n" OS threads.
+//Multiplexing is like switching,
+
+//error propagation -> use return values or shared error variable if not using channels
+
+//wait groups, channels, worker pools

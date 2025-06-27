@@ -1,0 +1,139 @@
+package advanced
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+)
+
+func doWork(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("Work cancelled:", ctx.Err())
+			return
+		default:
+			fmt.Println("Working...")
+		}
+		time.Sleep(500 * time.Millisecond)
+	}
+}
+
+func main() {
+	ctx := context.Background()
+	// ctx, cancel := context.WithTimeout(ctx, 2*time.Second) // timer of the context starts here. You have this specified time duration to use this context. After this time duration, the context will send a cancelation signal.
+
+	ctx, cancel := context.WithCancel(ctx) // timer of the context starts here. You have this specified time duration to use this context. After this time duration, the context will send a cancelation signal.
+
+	go func() {
+		time.Sleep(2 * time.Second) // simulating a heavy task. Consider this a heavy time consuming operation
+		cancel()                    // manually canceling only after the task is finished
+	}()
+
+	ctx = context.WithValue(ctx, "requestID", "hdsjf3234324234")
+	ctx = context.WithValue(ctx, "name", "John")
+	ctx = context.WithValue(ctx, "IP", "dsd.34.4332.34")
+	ctx = context.WithValue(ctx, "OS", "Operating System")
+
+	go doWork(ctx)
+
+	time.Sleep(3 * time.Second)
+
+	requestID := ctx.Value("requestID")
+	if requestID != nil {
+		fmt.Println("Request ID:", requestID)
+	} else {
+		fmt.Println("No request ID found.")
+	}
+
+	logWithContext(ctx, "This is a test log message")
+}
+
+func logWithContext(ctx context.Context, message string) {
+	requestIDVal := ctx.Value("requestID")
+	log.Printf("RequestID: %v - %v", requestIDVal, message)
+}
+
+// func checkEvenOdd(ctx context.Context, num int) string {
+// 	select {
+// 	case <-ctx.Done():
+// 		return "Operation canceled"
+// 	default:
+// 		if num%2 == 0 {
+// 			return fmt.Sprintf("%d is even", num)
+// 		} else {
+// 			return fmt.Sprintf("%d is odd", num)
+// 		}
+// 	}
+// }
+
+// func main() {
+// 	ctx := context.TODO()
+
+// 	result := checkEvenOdd(ctx, 5)
+// 	fmt.Println("Result with context.TODO():", result)
+
+// 	ctx = context.Background()
+// 	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
+// 	defer cancel()
+
+// 	result = checkEvenOdd(ctx, 10)
+// 	fmt.Println("Result from timeout context:", result)
+
+// 	time.Sleep(3 * time.Second)
+// 	result = checkEvenOdd(ctx, 15)
+// 	fmt.Println("Result after timeout:", result)
+// }
+
+// ======= DIFFERENCE BETWEEN CONTEXT.TODO AND CONTEXT.BACKGROUND
+// func main() {
+
+// 	todoContext := context.TODO()
+// 	contextBkg := context.Background()
+
+// 	ctx := context.WithValue(todoContext, "name", "John")
+// 	fmt.Println(ctx)
+// 	fmt.Println(ctx.Value("name"))
+
+// 	ctx1 := context.WithValue(contextBkg, "city", "New York")
+// 	fmt.Println(ctx1)
+// 	fmt.Println(ctx1.Value("city"))
+// }
+
+// =============== DIFFERENCE BETWEEN CONTEXT.TODO AND CONTEXT.BACKGROUND
+// func main() {
+
+// 	todoContext := context.TODO() //placeholder context, even though it functions the same way as background does
+// 	contextBkg := context.Background()
+
+// 	ctx := context.WithValue(todoContext, "name", "John")
+// 	fmt.Println(ctx)
+// 	fmt.Println(ctx.Value("name"))
+
+// 	ctx1 := context.WithValue(contextBkg, "city", "New York")
+// 	fmt.Println(ctx1)
+// 	fmt.Println(ctx1.Value("city"))
+
+// }
+
+//Contexts can carry key-value pairs.
+//Contexts are kind of objects. These are instances of structs. And instances of structs are objects. Go doesn't have obj-oriented prog., so when we are creating an instance of a struct, it is an object. So, contexts are objects that we are creating in our code.
+
+//Why? Cancellation, timeouts, values
+//Context creation: context.Background, context.TODO()
+//Context heirarchy: context.WithCancel(), context.WithDeadline(), context.WithTimeout(), context.WithValue()
+
+//In the definition of context, we have a mention of request scoped values. It means that we are passing request scoped data across APi boundaries. We are also managing timeouts and deadlines for operations. And we are handling cancellation of operations using context.
+
+//A context in go is an object that carries information about deadlines, cancellation signals and other request scoped values across API boundaries and goroutines.
+
+//A context retains its values after being cancelled, and we can access those values from a context which has been cancelled.
+
+//We have a context with time duration of 2 seconds, that is going to cancel itself after 2 seconds, and we are accessing the values after three seconds without any problem. So we can access values at any point in time from a context, even if it is cancelled.
+
+//Usage: Context cancellation, timeouts and deadlines, context values
+
+//Avoid storing contexts in structs, propagating context correctly, handling context values, handling context cancellation, avoid creating contexts in loops
+
+//Common mistakes: Ignoring context cancellation, misusing context values.

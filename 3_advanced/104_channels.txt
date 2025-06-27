@@ -1,0 +1,55 @@
+package advanced
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+
+	//variable:=make(chan type) '<-' operator
+	greeting := make(chan string)
+	greetString := "Hello"
+
+	go func() {
+		greeting <- greetString //blocking because it is continously trying to receive values, it is ready to receive continuous flow of data
+		greeting <- "World"
+
+		for _, e := range "abcde" {
+			greeting <- "Alphabet: " + string(e)
+		}
+	}()
+
+	//receiver := <-greeting
+	//fmt.Println(receiver)
+
+	//Also blocking which means it'll stop the flow of execution until receiver gets a value, and if it doesn't, it throws an error.
+	//We've been using goroutines from the beginning: main is a thread/goroutine
+
+	// go func() {
+	// 	receiver := <-greeting
+	// 	fmt.Println(receiver)
+	// 	receiver = <-greeting
+	// 	fmt.Println(receiver)
+	// }()
+
+	receiver := <-greeting
+	fmt.Println(receiver)
+	receiver = <-greeting
+	fmt.Println(receiver)
+
+	for range 5 {
+		rcvr := <-greeting
+		fmt.Println(rcvr)
+	}
+
+	time.Sleep(1 * time.Second)
+	fmt.Println("End of program.")
+}
+
+//Enable safe comm. b/w concurr. goroutines, help sync and manage the flow of data
+//create channels -> make(chan Type)
+//Sendnig and receiving data(<-)
+//Channel directions: send-only('ch<-value'), receive-only('value:=<-ch')
+
+//Avoid deadlocks, unn. buffering, channel direction, graceful shutdown, 'defer' for unlocking

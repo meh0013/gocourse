@@ -1,1 +1,3 @@
 Lec 98 IO Package - Complexity rises, explanation increases
+Lec 103 goroutines //wait groups, channels, worker pools
+Lec 114 Tickers - motivation, advice near the end :)
