@@ -1,0 +1,27 @@
+package restapi
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+func main() {
+
+	http.HandleFunc("/", func(resp http.ResponseWriter, req *http.Request) {
+		fmt.Fprintln(resp, "Hello Server!")
+	})
+
+	const port string = ":8080"
+
+	fmt.Println("Server listening on port: ", port)
+	err := http.ListenAndServe(port, nil)
+	if err != nil {
+		log.Fatalln("Error starting server", err)
+
+	}
+
+}
+
+//A computer has 65,535 ports: Well-known ports(0-1023), Registered ports(1024-49151), Dynamic or private ports(49152-65535)
+//Common Ports: Port 80(HTTP), 443(HTTPS Secure web traffic), 25(SMTP, for mails), 21(FTP - file transfer protocol), {3000, 8080, 8000} - web dev and running local servers

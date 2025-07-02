@@ -1,3 +1,5 @@
 Lec 98 IO Package - Complexity rises, explanation increases
 Lec 103 goroutines //wait groups, channels, worker pools
 Lec 114 Tickers - motivation, advice near the end :)
+Lec 116 Wait Groups - complicated example at the end
+Lec 120,121,122 - Rate Limiting Algos, revisit them!!

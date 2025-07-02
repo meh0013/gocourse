@@ -1,0 +1,19 @@
+API Endpoints
+
+An endpoint is a specific URL or URI where an API interacts with clients. It represents a specific resource or collection of resources exposed by an API. 
+
+Components:
+1) Base URL: https://api.example/com/v1/
+2) Path: '/users', '/orders', '/products'
+3) Query Parameters: '?status=active&limit=10'
+4) HTTP Method: 'GET/users', 'POST/orders'
+
+Types of Endpoints: 
+
+1) Resource endpoints: '/users/123', '/users'
+2) Action-based endpoints: '/users/123/activate', '/orders/checkout'
+3) Query-based endpoints: '/products?category=electronics','/orders?status=shipped&limit=10'
+
+Designing API Endpoints: Resource naming(use nouns), consistent and predictable URLs, Versioning, Error Handling
+
+Best practices: Use RESTful principles, ensure security, optimise performance, document endpoints

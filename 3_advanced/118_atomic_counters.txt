@@ -1,0 +1,50 @@
+package advanced
+
+import (
+	"fmt"
+	"sync"
+	"sync/atomic"
+)
+
+type AtomicCounter struct {
+	count int64
+}
+
+func (ac *AtomicCounter) increment() {
+	atomic.AddInt64(&ac.count, 1)
+}
+
+func (ac *AtomicCounter) getValue() int64 {
+	return atomic.LoadInt64(&ac.count)
+}
+
+func main() {
+	var wg sync.WaitGroup
+	numGoroutines := 10
+	counter := &AtomicCounter{}
+	// value := 0
+
+	for range numGoroutines {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for range 1000 {
+				counter.increment()
+				// value++
+			}
+		}()
+	}
+
+	wg.Wait()
+	fmt.Printf("Final counter value: %d\n", counter.getValue())
+	// fmt.Printf("Final counter value: %d\n", value)
+}
+
+//An atomic counter is a type of counter used in concurrent programming to manage and track counts or values in a thread safe manner, without the need for explicit locking.
+//It leverages atomic operations to ensure consistency and prevent race conditions.
+//Atomic operations are often faster than using mutexes due to lower overhead.
+//Atomic operations refers to operations that are indivisible and uninterruptible. Crucial for ensuring safe, concurrent access to shared resources in a multithreaded env.
+//Atomic: Indivisible, uninterruptible
+//Why? Lost updates, inconsistent reads
+//Working? Lock-free, memory visibility
+//Issues? Data race, inconsistent results

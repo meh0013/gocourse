@@ -1,0 +1,29 @@
+REST API
+
+1) Application Programming Interface
+
+-> Set of rules and protocols that allows different software applications to communicate with each other
+-> A standardised way for applications to interact and exchange data
+
+2) REST - Representational State Transfer
+
+Key Principles
+-> Statelessness: Each req from a client to the server must contain all the information the server needs to fulfill the request. The server does not store any state about the client session between requests. 
+-> Client-Server Architecture: Focuses on separation of concerns between client and server. The client is responsible for the user interface while the server manages data and business logic. 
+-> Uniform Interface: A consistent interface across the system that simplifies and decouples the architecture, allowing for independent evolution of components is uniform interface.  
+-> Resource-Based: Resources which are data objects, are identified by URLs. Each resource is accessed using standard HTTP methods like get, post, put, delete.
+-> Stateless Communication
+-> Cacheability: Proper caching reduces the neeed for repeated requests and improves performance. 
+
+RESTful systems communicate via HTTP and use a stateless client server and cacheable communication protocol.  
+
+Key Comp. of RESTful APIs: Resources, endpoints, HTTP methods, request and response format. 
+(Endpoints: Specific URLs where resources are accessed or manipualted are called endpoints. Like multiple branches coming out from a center point, with the branches being the endpoints. You access those endpoints to either retrieve info. or submit info. Frontend doesn't have endpoints, they're just for server for the API. What to do at endpoints{retrieve or submit data} is decided using HTTP methods, which are also called HTTP verbs such as get, post, put, patch and delete.)
+
+Once a client accesses an endpoint using an HTTP verb, we receive a request and we need to send a response -> Request and response formats -> The client sends requests to the server -> Requests include HTTP method, URL headers, and optionally a body -> The server sends a response to the client -> Response includes status codes, headers, and a body containing the requested data or the result of the operation. 
+
+RESTful APis support scalability by separating client and server concerns, and allowing for distributed systems. They are stateless, which simplifies server design and scaling. 
+
+REST APIs are request response based and may not be suitable for real-time applications where immediate updates are required. Alternatives like WebSockets or GraphQL might be used in those cases. 
+
+Benefits of RESTful APIs: Scalability, Interoperability, Flexibility, Explanation, Cacheability. 
